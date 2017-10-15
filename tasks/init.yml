@@ -1,0 +1,30 @@
+---
+### ASSERTION
+
+- name: Assert required variables
+  assert:
+    that:
+      - sssd__services|difference(['nss', 'pam', 'sudo', 'autofs', 'ssh', 'pac', 'ifp'])|length == 0
+      - sssd__domains is iterable and sssd__domains is not string
+
+- name: Init SSSD services settings
+  set_fact:
+    _sssd__services_settings: "{{ _sssd__services_settings|d({})|
+                                    combine(
+                                      {item: ( sssd__services_settings[item]|d({}) )}, recursive=True
+                                    )|
+                                    combine(
+                                      {item: ( vars['sssd__service_'~item~'_settings']|d({}) )}, recursive=True
+                                    )}}"
+  with_items: '{{ sssd__services }}'
+
+- name: Init SSSD domains settings
+  set_fact:
+    _sssd__domains_settings: "{{ _sssd__domains_settings|d({})|
+                                  combine(
+                                    {item: ( sssd__domains_settings[item]|d({}) )}, recursive=True
+                                  )|
+                                  combine(
+                                    {item: ( vars['sssd__domain_'~item~'_settings']|d({}) )}, recursive=True
+                                  )}}"
+  with_items: '{{ sssd__domains }}'

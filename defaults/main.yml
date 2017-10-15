@@ -1,0 +1,38 @@
+---
+# defaults file for sssd
+
+sssd__packages_names: []
+
+sssd__service_name: sssd
+sssd__config_dir: /etc/sssd
+sssd__config_file: '{{ sssd__config_dir}}/sssd.conf'
+sssd__default_file: /etc/default/sssd
+
+sssd__user: root
+sssd__group: root
+
+# Location of SSSD cache
+sssd__cache_dir: /var/lib/sss/db/
+
+# Enabled services
+sssd__services: []
+# Defined domains
+sssd__domains: []
+
+# Settings per services
+sssd__services_settings: {}
+sssd__service_nss_settings: {}
+sssd__service_pam_settings: {}
+sssd__service_sudo_settings: {}
+sssd__service_autofs_settings: {}
+sssd__service_ssh_settings: {}
+sssd__service_pac_settings: {}
+sssd__service_ifp_settings: {}
+
+# Settings per domain
+sssd__domains_settings: {}
+#sssd__domain_[DOMAIN NAME]_settings: {}
+
+
+# Working values
+_sssd__service_settings: {}

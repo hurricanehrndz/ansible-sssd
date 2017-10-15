@@ -1,0 +1,7 @@
+---
+
+- name: Install SSSD packages
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items: '{{ sssd__packages_names }}'

@@ -1,0 +1,28 @@
+---
+
+- name: Ensure SSSD configuration directory exists
+  file:
+    path:  '{{ sssd__config_dir }}'
+    owner: '{{ sssd__user }}'
+    group: '{{ sssd__group }}'
+    mode:  0711
+    state: directory
+
+- name: Install bind default configuration file
+  template:
+    src: default-sssd.j2
+    dest: "{{ sssd__default_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == 'Debian'
+  notify: [ 'clean-and-restart-sssd' ]
+
+- name: Setup sssd.conf
+  template:
+    src:   sssd.conf.j2
+    dest:  '{{ sssd__config_file }}'
+    owner: root
+    group: root
+    mode:  0600
+  notify: [ 'clean-and-restart-sssd' ]

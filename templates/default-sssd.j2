@@ -1,0 +1,9 @@
+#
+# {{ ansible_managed }}
+#
+
+# Defaults for sssd initscript
+# sourced by /etc/init.d/sssd
+
+# Additional options that are passed to the Daemon.
+DAEMON_OPTS="--daemon --debug-to-files --config {{ sssd__config_file }}"
