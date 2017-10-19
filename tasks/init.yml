@@ -14,8 +14,14 @@
                                       {item: ( sssd__services_settings[item]|d({}) )}, recursive=True
                                     )|
                                     combine(
+                                      {item: ( sssd__services_defaults_settings[item]|d({}) )}, recursive=True
+                                    )|
+                                    combine(
                                       {item: ( vars['sssd__service_'~item~'_settings']|d({}) )}, recursive=True
-                                    )}}"
+                                    )|
+                                    combine(
+                                      {item: ( vars['sssd__service_'~item~'_defaults_settings']|d({}) )}, recursive=True
+                                    ) }}"
   with_items: '{{ sssd__services }}'
 
 - name: Init SSSD domains settings

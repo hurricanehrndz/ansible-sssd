@@ -19,8 +19,28 @@ sssd__services: []
 # Defined domains
 sssd__domains: []
 
+# List of default filtered users
+sssd__default_filter_users:
+  - root
+# User editable filtered users list
+sssd__filter_users: []
+# Merged list used internally
+sssd__filter_users_merged: '{{ sssd__default_filter_users|union(sssd__filter_users) }}'
+
+# List of default filtered groups
+sssd__default_filter_groups:
+  - root
+# User editable filtered groups list
+sssd__filter_groups: []
+# Merged list used internally
+sssd__filter_groups_merged: '{{ sssd__default_filter_groups|union(sssd__filter_groups) }}'
+
 # Settings per services
 sssd__services_settings: {}
+sssd__services_defaults_settings:
+  nss:
+    filter_users: '{{ sssd__filter_users_merged|join(",") }}'
+    filter_groups: '{{ sssd__filter_groups_merged|join(",") }}'
 sssd__service_nss_settings: {}
 sssd__service_pam_settings: {}
 sssd__service_sudo_settings: {}
