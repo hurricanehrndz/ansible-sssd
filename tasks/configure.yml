@@ -8,7 +8,7 @@
     mode:  0711
     state: directory
 
-- name: Install bind default configuration file
+- name: Install default configuration file (for Debian)
   template:
     src: default-sssd.j2
     dest: "{{ sssd__default_file }}"
