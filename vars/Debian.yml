@@ -4,3 +4,5 @@ sssd__packages_names:
   - sssd
   - libnss-sss
   - libpam-sss
+
+sssd__default_file: /etc/default/sssd

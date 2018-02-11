@@ -1,12 +1,23 @@
 ---
 # defaults file for sssd
 
+# List of packages required for sssd
 sssd__packages_names: []
 
+# The name of the service as registered in init
 sssd__service_name: sssd
+
+# If the daemon must be enabled
+sssd__service_enabled: True
+
+# Main configuration directory
 sssd__config_dir: /etc/sssd
+
+# The main configuration file
 sssd__config_file: '{{ sssd__config_dir}}/sssd.conf'
-sssd__default_file: /etc/default/sssd
+
+# The path to the default settings file (only for some distributions)
+#sssd__default_file: /etc/default/sssd
 
 sssd__user: root
 sssd__group: root
