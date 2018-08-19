@@ -9,28 +9,20 @@
 
 - name: Init SSSD services settings
   set_fact:
-    _sssd__services_settings: "{{ _sssd__services_settings|d({})|
-                                    combine(
-                                      {item: ( sssd__services_settings[item]|d({}) )}, recursive=True
-                                    )|
-                                    combine(
-                                      {item: ( sssd__services_defaults_settings[item]|d({}) )}, recursive=True
-                                    )|
-                                    combine(
-                                      {item: ( vars['sssd__service_'~item~'_settings']|d({}) )}, recursive=True
-                                    )|
-                                    combine(
-                                      {item: ( vars['sssd__service_'~item~'_defaults_settings']|d({}) )}, recursive=True
-                                    ) }}"
-  with_items: '{{ sssd__services }}'
+    _sssd__services_settings: "{{
+      _sssd__services_settings|d({})
+        |combine( {item: ( sssd__services_settings[item]|d({}) )}, recursive=true )
+        |combine( {item: ( sssd__services_defaults_settings[item]|d({}) )}, recursive=true )
+        |combine( {item: ( vars['sssd__service_'~item~'_settings']|d({}) )}, recursive=True )
+        |combine( {item: ( vars['sssd__service_'~item~'_defaults_settings']|d({}) )}, recursive=true )
+    }}"
+  with_items: '{{ sssd__services|list }}'
 
 - name: Init SSSD domains settings
   set_fact:
-    _sssd__domains_settings: "{{ _sssd__domains_settings|d({})|
-                                  combine(
-                                    {item: ( sssd__domains_settings[item]|d({}) )}, recursive=True
-                                  )|
-                                  combine(
-                                    {item: ( vars['sssd__domain_'~item~'_settings']|d({}) )}, recursive=True
-                                  )}}"
-  with_items: '{{ sssd__domains }}'
+    _sssd__domains_settings: "{{
+      _sssd__domains_settings|d({})
+      |combine( {item: ( sssd__domains_settings[item]|d({}) )}, recursive=true )
+      |combine( {item: ( vars['sssd__domain_'~item~'_settings']|d({}) )}, recursive=true )
+    }}"
+  with_items: '{{ sssd__domains|list }}'

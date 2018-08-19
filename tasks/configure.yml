@@ -2,27 +2,27 @@
 
 - name: Ensure SSSD configuration directory exists
   file:
-    path:  '{{ sssd__config_dir }}'
-    owner: '{{ sssd__user }}'
-    group: '{{ sssd__group }}'
-    mode:  0711
+    path: '{{ sssd__configuration_directory }}'
+    owner: '{{ sssd__service_user }}'
+    group: '{{ sssd__service_group }}'
+    mode: 0711
     state: directory
 
 - name: Install default configuration file (for Debian)
   template:
-    src:   default-sssd.j2
-    dest:  '{{ sssd__default_file }}'
+    src: sssd.environment.j2
+    dest: '{{ sssd__service_environment }}'
     owner: root
     group: root
-    mode:  0644
-  when: ansible_distribution == 'Debian'
-  notify: [ 'clean-and-restart-sssd' ]
+    mode: 0644
+  when: sssd__service_environment is defined
+  notify: ['restart-sssd']
 
 - name: Setup sssd.conf
   template:
-    src:   sssd.conf.j2
-    dest:  '{{ sssd__config_file }}'
+    src: sssd.conf.j2
+    dest: '{{ sssd__configuration_file }}'
     owner: root
     group: root
-    mode:  0600
-  notify: [ 'clean-and-restart-sssd' ]
+    mode: 0600
+  notify: ['restart-sssd']

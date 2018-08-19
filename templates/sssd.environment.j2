@@ -1,0 +1,4 @@
+{{ ansible_managed|comment(decoration='# ') }}
+
+# Additional options that are passed to the Daemon.
+DAEMON_OPTS="--daemon --debug-to-files --config {{ sssd__configuration_file }}"

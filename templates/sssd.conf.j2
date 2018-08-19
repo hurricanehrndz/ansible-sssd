@@ -1,6 +1,4 @@
-#
-# {{ ansible_managed }}
-#
+{{ ansible_managed|comment(decoration='# ') }}
 
 [sssd]
 config_file_version = 2
@@ -9,7 +7,7 @@ domains = {{ sssd__domains|join(', ') }}
 
 {% for service in sssd__services %}
 [{{ service }}]
-{%   if service in _sssd__services_settings %}
+{%   if service in _sssd__services_settings|d({}) %}
 {%     for key, value in _sssd__services_settings[service]|dictsort %}
 {{ key }} = {{ value }}
 {%     endfor %}
@@ -19,7 +17,7 @@ domains = {{ sssd__domains|join(', ') }}
 
 {% for domain in sssd__domains %}
 [domain/{{ domain }}]
-{%   if domain in _sssd__domains_settings %}
+{%   if domain in _sssd__domains_settings|d({}) %}
 {%     for key, value in _sssd__domains_settings[domain]|dictsort %}
 {{ key }} = {{ value }}
 {%     endfor %}

@@ -1,11 +1,11 @@
 ---
 # handlers file for sssd
 
-- name: clean-and-restart-sssd
-  shell: 'rm --force {{ sssd__cache_dir }}/*'
-  notify: [ 'restart-sssd' ]
-
 - name: restart-sssd
+  shell: 'rm --force {{ sssd__cache_directory }}/*'
+  notify: ['restart-sssd-daemon']
+
+- name: restart-sssd-daemon
   service:
     name: '{{ sssd__service_name }}'
     state: restarted

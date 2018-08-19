@@ -1,29 +1,45 @@
 ---
-# defaults file for sssd
+# defaults file for ansible-sssd
 
+# Enable facts deploiement
+sssd__facts: true
+
+# Choose the monitoring backend to configure (if available)
+# sssd__monitoring:
+
+
+### INSTALL CONFIGURATION
+# ---------------------------------------
 # List of packages required for sssd
 sssd__packages_names: []
+
+
+### SERVICE CONFIGURATION
+# ---------------------------------------
+# The user and group that sssd will run as
+sssd__service_user: root
+sssd__service_group: '{{ sssd__service_user }}'
 
 # The name of the service as registered in init
 sssd__service_name: sssd
 
 # If the daemon must be enabled
-sssd__service_enabled: True
+sssd__service_enabled: true
 
 # Main configuration directory
-sssd__config_dir: /etc/sssd
+sssd__configuration_directory: /etc/sssd
 
 # The main configuration file
-sssd__config_file: '{{ sssd__config_dir}}/sssd.conf'
+sssd__configuration_file: '{{ sssd__configuration_directory }}/sssd.conf'
 
-# The path to the default settings file (only for some distributions)
-#sssd__default_file: /etc/default/sssd
+# The path to the service environment variables (only for some distributions)
+# sssd__service_environment: /etc/default/sssd
 
-sssd__user: root
-sssd__group: root
 
+### SSSD CONFIGURATION
+# ---------------------------------------
 # Location of SSSD cache
-sssd__cache_dir: /var/lib/sss/db/
+sssd__cache_directory: /var/lib/sss/db
 
 # Enabled services
 sssd__services: []
@@ -62,8 +78,4 @@ sssd__service_ifp_settings: {}
 
 # Settings per domain
 sssd__domains_settings: {}
-#sssd__domain_[DOMAIN NAME]_settings: {}
-
-
-# Working values
-_sssd__service_settings: {}
+# sssd__domain_[DOMAIN NAME]_settings: {}

@@ -1,4 +1,4 @@
 ---
 
-sssd__user: sssd
-sssd__group: sssd
+sssd__service_user: sssd
+sssd__service_group: sssd

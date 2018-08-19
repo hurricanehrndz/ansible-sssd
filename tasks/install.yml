@@ -4,4 +4,4 @@
   package:
     name: '{{ item }}'
     state: present
-  with_items: '{{ sssd__packages_names }}'
+  with_items: '{{ sssd__packages_names|list }}'
