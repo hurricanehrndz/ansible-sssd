@@ -27,3 +27,13 @@
 - name: Importing service tasks
   import_tasks: service.yml
   tags: ['sssd', 'sssd-service']
+
+- name: Optionally importing monitoring tasks
+  include_tasks: 'monitoring/{{ sssd__monitoring }}.yml'
+  when: sssd__monitoring is defined
+  tags: ['sssd', 'sssd-monitoring']
+
+- name: Optionally importing facts tasks
+  include_tasks: facts.yml
+  when: sssd__facts|bool
+  tags: ['sssd', 'sssd-facts']
