@@ -2,7 +2,19 @@
 # handlers file for sssd
 
 - name: restart-sssd
-  shell: 'rm --force {{ sssd__cache_directory }}/*'
+  find:
+    paths: '{{ sssd__cache_directory }}'
+    file_type: file
+  register: _sssd__handler_restart_cache_find
+  changed_when: true
+  notify: ['purge-sssd-cache']
+
+- name: purge-sssd-cache
+  file:
+    path: '{{ item }}'
+    state: absent
+  with_items: "{{ _sssd__handler_restart_cache_find.files|map(attribute='path')|list}}"
+  changed_when: true
   notify: ['restart-sssd-daemon']
 
 - name: restart-sssd-daemon

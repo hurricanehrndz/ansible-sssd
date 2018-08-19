@@ -1,0 +1,8 @@
+---
+- name: Run role
+  hosts: all
+  any_errors_fatal: true
+  roles:
+    - role: ansible-sssd
+  vars:
+    sssd__service_enabled: false

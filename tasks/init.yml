@@ -12,9 +12,9 @@
     _sssd__services_settings: "{{
       _sssd__services_settings|d({})
         |combine( {item: ( sssd__services_settings[item]|d({}) )}, recursive=true )
-        |combine( {item: ( sssd__services_defaults_settings[item]|d({}) )}, recursive=true )
+        |combine( {item: ( sssd__services_settings_defaults[item]|d({}) )}, recursive=true )
         |combine( {item: ( vars['sssd__service_'~item~'_settings']|d({}) )}, recursive=True )
-        |combine( {item: ( vars['sssd__service_'~item~'_defaults_settings']|d({}) )}, recursive=true )
+        |combine( {item: ( vars['sssd__service_'~item~'_settings_defaults']|d({}) )}, recursive=true )
     }}"
   with_items: '{{ sssd__services|list }}'
 
