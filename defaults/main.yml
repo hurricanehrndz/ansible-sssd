@@ -11,7 +11,8 @@ sssd__facts: true
 ### INSTALL CONFIGURATION
 # ---------------------------------------
 # List of packages required for sssd
-sssd__packages_names: []
+sssd__packages_names:
+  - sssd
 
 
 ### SERVICE CONFIGURATION
@@ -47,34 +48,60 @@ sssd__services: []
 sssd__domains: []
 
 # List of default filtered users
-sssd__default_filter_users:
+sssd__filter_users_default:
   - root
 # User editable filtered users list
 sssd__filter_users: []
 # Merged list used internally
-sssd__filter_users_merged: '{{ sssd__default_filter_users|union(sssd__filter_users) }}'
+sssd__filter_users_merged: '{{ sssd__filter_users_default|union(sssd__filter_users) }}'
 
 # List of default filtered groups
-sssd__default_filter_groups:
+sssd__filter_groups_default:
   - root
 # User editable filtered groups list
 sssd__filter_groups: []
 # Merged list used internally
-sssd__filter_groups_merged: '{{ sssd__default_filter_groups|union(sssd__filter_groups) }}'
+sssd__filter_groups_merged: '{{ sssd__filter_groups_default|union(sssd__filter_groups) }}'
 
 # Settings per services
+# Dict of global service settings
+# each key is a service name,
+# and each value is a dict of option that apply on that service
 sssd__services_settings: {}
-sssd__services_defaults_settings:
+
+# Default options for all services
+sssd__services_settings_defaults:
   nss:
     filter_users: '{{ sssd__filter_users_merged|join(",") }}'
     filter_groups: '{{ sssd__filter_groups_merged|join(",") }}'
+
+# Specific settings that apply on nss service
 sssd__service_nss_settings: {}
+sssd__service_nss_settings_defaults: {}
+
+# Specific settings that apply on pam service
 sssd__service_pam_settings: {}
+sssd__service_pam_settings_defaults: {}
+
+# Specific settings that apply on sudo service
 sssd__service_sudo_settings: {}
+sssd__service_sudo_settings_defaults: {}
+
+# Specific settings that apply on autofs service
 sssd__service_autofs_settings: {}
+sssd__service_autofs_settings_defaults: {}
+
+# Specific settings that apply on ssh service
 sssd__service_ssh_settings: {}
+sssd__service_ssh_settings_defaults: {}
+
+# Specific settings that apply on pac service
 sssd__service_pac_settings: {}
+sssd__service_pac_settings_defaults: {}
+
+# Specific settings that apply on ifp service
 sssd__service_ifp_settings: {}
+sssd__service_ifp_settings_defaults: {}
 
 # Settings per domain
 sssd__domains_settings: {}
