@@ -92,3 +92,7 @@ coverage.xml
 
 ## Laravel
 /.env
+
+## direnv
+.envrc
+.direnv/
