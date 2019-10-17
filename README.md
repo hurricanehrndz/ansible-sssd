@@ -53,8 +53,6 @@ All variables which can be overridden are stored in [defaults/main.yml](defaults
 | `sssd__service_ifp_settings`           | Dict of string         | Specific settings that apply on ifp service                                              |
 | `sssd__domains_settings`               | Dict of dict of string | Each key is a domain name, and each value is a dict of option that apply on that domain  |
 | `sssd__domains_[domain_name]_settings` | Dict of string         | Specific settings that apply on named domain                                             |
-| `sssd__filter_users`                   | List of username       | Exclude theses users from sss fetchs                                                     |
-| `sssd__filter_groups`                  | List of group name     | Exclude theses groups from sss fetchs                                                    |
 
 * Using service settings
 
