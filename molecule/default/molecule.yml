@@ -2,28 +2,16 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: podman
 lint:
   name: yamllint
 platforms:
-  - name: debian8
-    image: turgon37/docker-debian8-ansible
-    command: /lib/systemd/systemd
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: debian9
-    image: turgon37/docker-debian9-ansible
-    command: /lib/systemd/systemd
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: centos7
-    image: turgon37/docker-centos7-ansible
-    command: /usr/lib/systemd/systemd
-    privileged: true
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - name: ansible-sssd-test
+    image: "quay.io/samdoran/${MOLECULE_DISTRIBUTION:-ubuntu18}-ansible"
+    command: ${MOLECULE_COMMAND:-""}
+    tty: True
+    privileged: True
+    pre_build_image: Tru
 provisioner:
   name: ansible
   lint:
