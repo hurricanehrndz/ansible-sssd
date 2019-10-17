@@ -47,6 +47,22 @@ sssd__services: []
 # Defined domains
 sssd__domains: []
 
+# List of default filtered users
+sssd__filter_users_default:
+  - root
+# User editable filtered users list
+sssd__filter_users: []
+# Merged list used internally
+sssd__filter_users_merged: '{{ sssd__filter_users_default|union(sssd__filter_users) }}'
+
+# List of default filtered groups
+sssd__filter_groups_default:
+  - root
+# User editable filtered groups list
+sssd__filter_groups: []
+# Merged list used internally
+sssd__filter_groups_merged: '{{ sssd__filter_groups_default|union(sssd__filter_groups) }}'
+
 # Settings per services
 # Dict of global service settings
 # each key is a service name,
