@@ -1,26 +1,30 @@
-{{ ansible_managed|comment(decoration='# ') }}
+#jinja2: trim_blocks: "true", lstrip_blocks: "false"
+# {{ ansible_managed }}
 
 [sssd]
 config_file_version = 2
 services = {{ sssd__services|join(', ') }}
 domains = {{ sssd__domains|join(', ') }}
+{% if sssd__default_domain is defined -%}
+  default_domain_suffix = {{ sssd__default_domain }}
 
-{% for service in sssd__services %}
-[{{ service }}]
-{%   if service in _sssd__services_settings|d({}) %}
-{%     for key, value in _sssd__services_settings[service]|dictsort %}
-{{ key }} = {{ value }}
-{%     endfor %}
-{%   endif %}
+{% endif %}
+
+{% for service in sssd__services -%}
+  [{{ service }}]
+  {% if service in _sssd__services_settings|d({}) -%}
+    {% for key, value in _sssd__services_settings[service]|dictsort -%}
+      {{ key }} = {{ value }}
+    {% endfor %}
+  {%- endif %}
 
 {% endfor %}
 
-{% for domain in sssd__domains %}
+{% for domain in sssd__domains -%}
 [domain/{{ domain }}]
-{%   if domain in _sssd__domains_settings|d({}) %}
-{%     for key, value in _sssd__domains_settings[domain]|dictsort %}
-{{ key }} = {{ value }}
-{%     endfor %}
-{%   endif %}
-
-{% endfor %}
+  {% if domain in _sssd__domains_settings|d({}) -%}
+    {% for key, value in _sssd__domains_settings[domain]|dictsort -%}
+      {{ key }} = {{ value }}
+    {% endfor %}
+  {%- endif %}
+{%- endfor %}
