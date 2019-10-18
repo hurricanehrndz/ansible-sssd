@@ -1,5 +1,9 @@
 ---
 
+- name: Update repo cache
+  action: >
+    {{ ansible_pkg_mgr }} update_cache=yes
+
 - name: Install SSSD packages
   package:
     name: '{{ item }}'
