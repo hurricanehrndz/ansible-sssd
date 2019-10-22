@@ -17,6 +17,8 @@ platforms:
     pre_build_image: True
 provisioner:
   name: ansible
+  options:
+    vvv: true
   lint:
     name: ansible-lint
 scenario:
