@@ -4,8 +4,36 @@
   action: >
     {{ ansible_pkg_mgr }} update_cache=yes
 
-- name: Install SSSD packages
+- name: Install realmd
   package:
     name: '{{ item }}'
     state: present
-  with_items: '{{ sssd__packages_names|list }}'
+  with_items: '{{ realmd__packages_names|list }}'
+
+- debug:
+    var: MOLECULE_TESTRUN|default(false)
+
+- name: Get SSSD packages
+  shell: |
+    set -o pipefail
+    realm discover {{ sssd__domains|first|upper }} | \
+    awk /required-package/'{ print $2 }'
+  changed_when: false
+  args:
+    executable: /bin/bash
+  register: required_sssd_packages
+  when: not MOLECULE_TESTRUN|default(false)
+
+- name: Set required SSSD packages
+  set_fact:
+    _req_sssd__packages: "{{
+      _req_sssd__packages|default([])
+        |union(sssd__packages_names)
+        |unique
+    }}"
+
+- name: Install SSSD packages
+  package:
+    name: '{{ _req_sssd__packages|list }}'
+    state: present
+  when: _req_sssd__packages|list|length > 0

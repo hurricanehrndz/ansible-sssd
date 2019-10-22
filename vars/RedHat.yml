@@ -1,4 +1,7 @@
 ---
 
+realmd__packages_names:
+  - realmd
+
 sssd__service_user: sssd
 sssd__service_group: sssd
