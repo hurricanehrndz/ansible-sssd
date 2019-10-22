@@ -26,3 +26,37 @@
     group: root
     mode: 0600
   notify: ['restart-sssd']
+
+- name: Get package fact facts
+  package_facts:
+    manager: auto
+
+- name: Configure samba-common
+  template:
+    src: smb.conf.j2
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: True
+    validate: /usr/bin/testparm %s
+  when: "'samba-common' in ansible_facts.packages"
+
+- name: Fix rdns issues with /etc/hosts file
+  lineinfile:
+    path: /etc/hosts
+    backrefs: True
+    regexp: '^(127.0.1.1.*)$'
+    line: '#\1'
+    state: present
+    backup: True
+  when: not MOLECULE_TESTRUN|default(false)
+
+- name: Apparamor fix home issues
+  template:
+    src: apparmor_home_tunables.j2
+    dest: /etc/apparmor.d/tunables/home.d/ansible
+    owner: root
+    group: root
+    mode: 0644
+  when: "'apparmor' in ansible_facts.packages"
