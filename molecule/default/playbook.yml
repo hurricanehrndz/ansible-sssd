@@ -2,11 +2,23 @@
 - name: Run role
   hosts: all
   any_errors_fatal: true
-  roles:
-    - role: ansible-sssd
+  tasks:
+    - name: Update repo cache
+      action: >
+        {{ ansible_pkg_mgr }} update_cache=yes cache_valid_time=1800
+
+    - name: Install apparmor
+      package:
+        name: apparmor
+        state: present
+
+    - name: Include ansible-sssd role
+      include_role:
+        name: ansible-sssd
   vars:
+    MOLECULE_TESTRUN: true
     sssd__service_enabled: false
-    sssd__domains: 
+    sssd__domains:
       - contoso.com
     sssd__default_domain: contoso.com
     sssd__services:
