@@ -3,5 +3,10 @@
 realmd__packages_names:
   - realmd
 
+sssd__openssh_pkg:
+  - openssh-server
+
+sssd__ssh_service_name: "sshd"
+
 sssd__service_user: sssd
 sssd__service_group: sssd

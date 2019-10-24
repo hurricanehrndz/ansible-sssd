@@ -1,6 +1,7 @@
 import os
 
 import testinfra.utils.ansible_runner
+import pytest
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
@@ -65,20 +66,30 @@ def test_smb_conf(host):
     assert conf.mode == 0o644
 
 
-def test_smb_conf_contents(host):
+@pytest.mark.parametrize("expected_line", [
+    b'realm = CONTOSO.COM',
+    b'workgroup = CONTOSO',
+    b'idmap config CONTOSO:backend = ad',
+    b'idmap config CONTOSO:schema_mode = rfc2307',
+    b'idmap config CONTOSO:range = 10000-999999',
+    b'idmap config CONTOSO:unix_nss_info = yes',
+    b'kerberos method = secrets and keytab',
+    b'security = ads'
+])
+def test_smb_conf_contents(host, expected_line):
     conf = host.file('/etc/samba/smb.conf')
     conf_content = conf.content
 
-    expected = [
-        b'realm = CONTOSO.COM',
-        b'workgroup = CONTOSO',
-        b'idmap config CONTOSO:backend = ad',
-        b'idmap config CONTOSO:schema_mode = rfc2307',
-        b'idmap config CONTOSO:range = 10000-999999',
-        b'idmap config CONTOSO:unix_nss_info = yes',
-        b'kerberos method = secrets and keytab',
-        b'security = ads'
-    ]
+    assert expected_line in conf_content
 
-    for line in expected:
-        assert line in conf_content
+
+@pytest.mark.parametrize("expected_line", [
+    b'PasswordAuthentication no',
+    b'AuthorizedKeysCommand /usr/bin/sss_ssh_authorizedkeys',
+    b'AuthorizedKeysCommandUser nobody'
+])
+def test_sshd_config(host, expected_line):
+    config = host.file('/etc/ssh/sshd_config')
+    config_contents = config.content
+
+    assert expected_line in config_contents

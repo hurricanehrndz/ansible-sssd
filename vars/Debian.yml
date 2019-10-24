@@ -8,6 +8,11 @@ sssd__packages_names:
  - adcli
  - samba-common-bin
 
+sssd__openssh_pkg:
+  - openssh-server
+
+sssd__ssh_service_name: "sshd"
+
 realmd__packages_names:
   - realmd
 

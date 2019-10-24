@@ -60,3 +60,23 @@
     group: root
     mode: 0644
   when: "'apparmor' in ansible_facts.packages"
+
+- name: Confirm openSSH server is installed if configuring service
+  package:
+    name: "{{ sssd__openssh_pkg }}"
+  when:
+    - sssd__configure_ssh|default(false)
+    - "'ssh' in sssd__services"
+
+- name: Configure openSSH server for sssd ssh service
+  blockinfile:
+    backup: True
+    block: |
+      PasswordAuthentication no
+      AuthorizedKeysCommand /usr/bin/sss_ssh_authorizedkeys
+      AuthorizedKeysCommandUser nobody
+    path: /etc/ssh/sshd_config
+  notify: ['restart-sshd']
+  when:
+    - sssd__configure_ssh|default(false)
+    - "'ssh' in sssd__services"

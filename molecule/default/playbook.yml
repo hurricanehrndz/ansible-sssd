@@ -35,3 +35,4 @@
       contoso.com:
         ad_domain: contoso.com
         krb5_realm: contoso.com
+    sssd__configure_ssh: true

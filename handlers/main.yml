@@ -21,3 +21,8 @@
   service:
     name: '{{ sssd__service_name }}'
     state: restarted
+
+- name: restart-sshd
+  service:
+    name: '{{ sssd__ssh_service_name }}'
+    state: restarted
