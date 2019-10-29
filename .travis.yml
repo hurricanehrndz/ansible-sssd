@@ -20,7 +20,7 @@ script:
   - python --version
   - molecule --version
   - ansible --version
-  - molecule test -s $MOLECULE_SCENARI
+  - molecule test -s $MOLECULE_SCENARIO
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
