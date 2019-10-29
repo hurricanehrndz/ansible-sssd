@@ -11,6 +11,8 @@
       package:
         name: apparmor
         state: present
+      when:
+        - ansible_os_family == 'Debian'
 
     - name: Include ansible-sssd role
       include_role:
