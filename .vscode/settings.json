@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": ".direnv/python-3.7.4/bin/python3",
+  "python.pythonPath": ".direnv/python-3.8.0/bin/python",
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true
 }
