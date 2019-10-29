@@ -1,25 +1,26 @@
 ---
-language: python
-cache: pip
-# Tell Travis to start Docker when it brings up an environment.
-services:
-  - docker
-env:
-  - ANSIBLE='ansible>=2.4.0'
+dist: bionic
+
 matrix:
   fast_finish: true
+  include:
+    - os: linux
+      services: docker
+      language: python
+      python: "3.8"
+      env:
+        - ANSIBLE='ansible>=2.8'
+        - MOLECULE_SCENARIO="default"
 
 install:
-  - >
-    pip install
-    ${ANSIBLE}
-    'ansible-lint>=3.4.15'
-    'molecule>=2.13.0'
-    docker
-    'testinfra>=1.7.0'
+  - pip3 install -U pip
+  - pip3 install "${ANSIBLE}" testinfra molecule docker
 
 script:
-  - molecule test --all
+  - python --version
+  - molecule --version
+  - ansible --version
+  - molecule test -s $MOLECULE_SCENARI
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
