@@ -2,19 +2,20 @@
 dependency:
   name: galaxy
 driver:
-  name: podman
+  name: docker
 lint:
   name: yamllint
   options:
     config-data:
       ignore: '.direnv/'
 platforms:
-  - name: ansible-sssd-test
-    image: "quay.io/samdoran/${MOLECULE_DISTRIBUTION:-ubuntu18}-ansible"
+  - name: sssd_install_${MOLECULE_DISTRIBUTION:-ubuntu18}
+    image: "quay.io/samdoran/${MOLECULE_DISTRIBUTION:-ubuntu18}-ansible:latest"
     command: ${MOLECULE_COMMAND:-""}
-    tty: True
-    privileged: True
-    pre_build_image: True
+    volumes:
+      - '/sys/fs/cgroup:/sys/fs/cgroup:ro'
+    privileged: true
+    pre_build_image: yes
 provisioner:
   name: ansible
   options:
