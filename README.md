@@ -1,5 +1,4 @@
-Ansible Role SSSD
-========
+# Ansible Role SSSD
 
 [![Build Status](https://travis-ci.org/Turgon37/ansible-sssd.svg?branch=master)](https://travis-ci.org/Turgon37/ansible-sssd)
 [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
@@ -27,11 +26,11 @@ This role is available for Debian and CentOS
 
 At this day the role can be used to :
 
-  * install sssd
-  * configure service and domains
-  * monitoring items for
-    * Zabbix
-  * [local facts](#facts)
+* install sssd
+* configure service and domains
+* monitoring items for
+  * Zabbix
+* [local facts](#facts)
 
 ## Configuration
 
@@ -47,7 +46,7 @@ All variables which can be overridden are stored in [defaults/main.yml](defaults
 | `sssd__service_nss_settings`           | Dict of string         | Specific settings that apply on nss service                                              |
 | `sssd__service_pam_settings`           | Dict of string         | Specific settings that apply on pam service                                              |
 | `sssd__service_sudo_settings`          | Dict of string         | Specific settings that apply on sudo service                                             |
-| `sssd__service_autofs_settings         | Dict of string         | Specific settings that apply on autofs service                                           |
+| `sssd__service_autofs_settings`         | Dict of string         | Specific settings that apply on autofs service                                           |
 | `sssd__service_ssh_settings`           | Dict of string         | Specific settings that apply on ssh service                                              |
 | `sssd__service_pac_settings`           | Dict of string         | Specific settings that apply on pac service                                              |
 | `sssd__service_ifp_settings`           | Dict of string         | Specific settings that apply on ifp service                                              |
@@ -80,7 +79,6 @@ By default the local fact are installed and expose the following variables :
 * ```ansible_local.sssd.version_full```
 * ```ansible_local.sssd.version_major```
 
-
 ## Example
 
 ### Playbook
@@ -95,9 +93,9 @@ Use it in a playbook as follows:
 
 ### Inventory
 
-  * Usage with freeipa 
+* Usage with freeipa
 
-```
+```yaml
 sssd__services:
   - sudo
   - nss
