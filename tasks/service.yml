@@ -4,4 +4,3 @@
   service:
     name: '{{ sssd__service_name }}'
     enabled: '{{ sssd__service_enabled|bool }}'
-    state: "{{ sssd__service_enabled|bool|ternary('started', 'stopped') }}"
