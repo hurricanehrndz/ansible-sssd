@@ -39,7 +39,7 @@
     group: root
     mode: 0644
     backup: True
-    validate: /usr/bin/testparm %s
+    validate: /usr/bin/testparm -s %s
   when: "'samba-common' in ansible_facts.packages"
 
 - name: Fix rdns issues with /etc/hosts file
